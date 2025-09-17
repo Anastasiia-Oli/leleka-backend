@@ -44,11 +44,4 @@ export const setupServer = () => {
   app.use(notFoundHandler);
 
   app.use(errorHandler);
-
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      message: 'Something went wrong',
-      error: err.message,
-    });
-  });
 };
