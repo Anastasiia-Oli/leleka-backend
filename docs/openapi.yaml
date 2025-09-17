@@ -1,0 +1,42 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Diary app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of diary app
+tags:
+  - name: Auth
+    description: Auth operations.
+  - name: Users
+    description: Users operations.
+  - name: Tasks
+    description: Tasks operations.
+  - name: Diaries
+    description: Diaries operations.
+  - name: Weeks
+    description: Weeks operations.
+servers:
+  - url: http://localhost:3000
+  - url: https://nodejs-hw-mongodb-fe6r.onrender.com # change link after deploy --------
+paths:
+  # створити приватний ендпоінт на отримання інформації про поточного користувача
+  /users/current:
+    get:
+      $ref: ../swagger/paths/users/current/get.yaml
+
+      # створити приватний ендпоінт для оновлення даних користувача
+  /users:
+    patch:
+      $ref: ../swagger/paths/users/patch.yaml
+
+      # створити приватний ендпоінт для оновлення аватару корситувача
+  /users/avatar:
+    patch:
+      $ref: ../swagger/paths/users/avatar/patch.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
