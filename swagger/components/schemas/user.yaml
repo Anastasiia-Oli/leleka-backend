@@ -33,6 +33,7 @@ properties:
     example: "2025-11-01"
   photo:
     type: string
+    format: binary
     description: Link to user photo
     example: "https://example.com/uploads/avatar.jpg"
   createdAt:
