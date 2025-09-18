@@ -35,6 +35,9 @@ paths:
   /users/avatar:
     patch:
       $ref: ../swagger/paths/users/avatar/patch.yaml
+  /auth:
+    post: 
+      $ref: ../swagger/paths/auth/post.yaml
 components:
   securitySchemes:
     bearerAuth:
