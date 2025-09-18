@@ -1,1 +1,48 @@
-# user schema
+type: object
+required:
+  - _id
+  - name
+  - email
+properties:
+  _id:
+    type: string
+    description: User unique identifier (ObjectId)
+    example: "650f1c7b8f1d2c001234abcd"
+  name:
+    type: string
+    description: User name
+    maxLength: 32
+    example: "Анастасія"
+  email:
+    type: string
+    description: User email (must be unique)
+    maxLength: 64
+    example: "test@mail.com"
+  childSex:
+    type: string
+    description: Gender of the child
+    enum: 
+      - Дівчинка
+      - Хлопчик
+      - Ще не знаю
+    example: "Хлопчик"
+  dueDate:
+    type: string
+    format: date
+    description: Expected due date (YYYY-MM-DD)
+    example: "2025-11-01"
+  photo:
+    type: string
+    format: binary
+    description: Link to user photo
+    example: "https://example.com/uploads/avatar.jpg"
+  createdAt:
+    type: string
+    format: date-time
+    description: Date of user creation
+    example: "2025-09-18T12:34:56.000Z"
+  updatedAt:
+    type: string
+    format: date-time
+    description: Date of last update
+    example: "2025-09-18T15:20:30.000Z"
