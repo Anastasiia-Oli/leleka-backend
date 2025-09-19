@@ -1,1 +1,38 @@
-#
+tags:
+  - Diaries
+summary: Редагувати запис
+description: Оновлює дані одного запису за його ID.
+operationId: updateDiary
+security:
+  - bearerAuth: []
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+    description: ID запису
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/diaries.yaml#/DiaryInput
+      example:
+        title: 'Оновлений заголовок'
+        description: 'Оновлений опис...'
+        date: '2025-07-16'
+        emotions: ['радість', 'щастя']
+responses:
+  '200':
+    description: Оновлений запис
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/diaries.yaml#/Diary
+  '400':
+    description: Невірні дані у запиті
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '404':
+    $ref: ../../components/responses/404.yaml
