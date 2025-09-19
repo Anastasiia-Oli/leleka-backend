@@ -10,7 +10,7 @@ requestBody:
     application/json:
       schema:
           type: object
-          required: 
+          required:
             - name
             - email
             - password
@@ -65,4 +65,20 @@ responses:
             message:
               type: string
               example: "Email in use"
-
+#logout
+/logout:
+  post:
+    tags:
+      - Auth
+    summary: Logout user
+    operationId: logoutUser
+    description: Logs out the current user by invalidating their token
+    security:
+      - bearerAuth: []
+    responses:
+      '204':
+        description: Successfully logged out (No Content)
+      '401':
+        description: Unauthorized (invalid or missing token)
+      '500':
+        description: Internal server error

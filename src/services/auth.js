@@ -12,4 +12,13 @@ export const registerUser = async (payload) => {
         ...payload,
         password: encryptedPassword,
     });
+
+
 };
+export const logoutUser = async (userId) => {
+    return await UsersCollection.findByIdAndUpdate(
+        userId,
+        { token: null },
+        { new: true }
+    );
+}
