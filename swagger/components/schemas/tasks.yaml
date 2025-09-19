@@ -1,0 +1,26 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: '650d1f6bc0bdfd1e84a5e9b3'
+  text:
+    type: string
+    example: 'Buy baby clothes'
+  date:
+    type: string
+    format: date
+    example: '2025-09-25'
+  isDone:
+    type: boolean
+    example: false
+  userId:
+    type: string
+    example: '64fd92b0c6c7e2f2e8b94a15'
+  createdAt:
+    type: string
+    format: date-time
+    example: '2025-09-19T10:15:30.000Z'
+  updatedAt:
+    type: string
+    format: date-time
+    example: '2025-09-19T10:15:30.000Z'
