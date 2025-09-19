@@ -7,7 +7,7 @@ const weeksRouter = express.Router();
 weeksRouter.get(
   '/:weekNumber',
   (req, res, next) => {
-    req.user = { dueDate: '2025-12-01' }; // заглушка
+    req.user = { dueDate: '2025-12-01' };
     next();
   },
   getWeek,

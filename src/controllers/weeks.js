@@ -23,7 +23,6 @@ export const getBabyWeek = (req, res) => {
   res.json({ weekNumber, baby });
 };
 
-// только данные про маму
 export const getMomWeek = (req, res) => {
   const weekNumber = parseInt(req.params.weekNumber, 10);
   const mom = getMomData(weekNumber);
