@@ -1,8 +1,8 @@
 tags:
   - Tasks
 summary: Create a new task
-operationId: createTask
 description: Create a new task for the authenticated user
+operationId: createTask
 security:
   - bearerAuth: []
 requestBody:
@@ -27,15 +27,19 @@ requestBody:
             example: '2025-09-25'
           isDone:
             type: boolean
+            enum: [true, false]
             default: false
-            example: false
 responses:
   '201':
-    description: Task created successfully
+    description: Task created
     content:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
             status:
               type: integer
@@ -44,4 +48,10 @@ responses:
               type: string
               example: Task created
             data:
-              $ref: '../../components/schemas/tasks.yaml'
+              $ref: ../../components/schemas/tasks.yaml
+  '401':
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/responses/401.yaml

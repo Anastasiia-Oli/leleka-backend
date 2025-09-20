@@ -1,8 +1,8 @@
 tags:
   - Tasks
 summary: Toggle task status
-operationId: updateUser
-description: Change task status (done / not done)
+description: Toggle task status (done/not done)
+operationId: updateTaskStatus
 security:
   - bearerAuth: []
 parameters:
@@ -29,4 +29,22 @@ responses:
             data:
               $ref: '../../components/schemas/tasks.yaml'
   '404':
-    description: Task not fou
+    description: Task not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required: [status, message]
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Task not found
+  '401':
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/responses/401.yaml'

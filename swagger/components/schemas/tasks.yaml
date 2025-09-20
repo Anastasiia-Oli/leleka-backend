@@ -12,7 +12,8 @@ properties:
     example: '2025-09-25'
   isDone:
     type: boolean
-    example: false
+    enum: [true, false]
+    default: false
   userId:
     type: string
     example: '64fd92b0c6c7e2f2e8b94a15'
@@ -24,3 +25,7 @@ properties:
     type: string
     format: date-time
     example: '2025-09-19T10:15:30.000Z'
+  required:
+    - text
+    - date
+    - isDone
