@@ -3,11 +3,6 @@ import { getEnvVar } from '../utils/getEnvVar.js';
 
 const SECRET_KEY = getEnvVar('SECRET_KEY');
 
-export function generateToken(payload) {
-  return jwt.sign(payload, SECRET_KEY, { EXPIRESiN: '1h'});
-}
-
-
 export function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
