@@ -13,7 +13,7 @@ filename: (req, file, cb ) => cb(null, Date.now() + path.extname(file.originalna
 const upload = multer({ storage});
 
 usersRouter.get('/me', authenticateToken, getCurrentUser);
-usersRouter.put('/update', authenticateToken, updateUserData);
+usersRouter.patch('/update', authenticateToken, updateUserData);
 usersRouter.post('/avatar', authenticateToken, upload.single('avatar'), updateUserAvatar);
 
 

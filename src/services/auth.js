@@ -13,3 +13,26 @@ export const registerUser = async (payload) => {
         password: encryptedPassword,
     });
 };
+
+// import bcrypt from 'bcrypt';
+// import createHttpError from 'http-errors';
+// import { UsersCollection } from '../db/models/users.js';
+// import { generateToken } from '../middlewares/auth.js';
+
+// export const registerUser = async (payload) => {
+//   const user = await UsersCollection.findOne({ email: payload.email });
+//   if (user) throw createHttpError(409, 'Email in use');
+
+
+//   const encryptedPassword = await bcrypt.hash(payload.password, 10);
+
+//   const newUser = await UsersCollection.create({
+//     ...payload,
+//     password: encryptedPassword,
+//   });
+
+//   const token = generateToken({ id: newUser._id, email: newUser.email });
+
+//   return { user: newUser, token };
+// };
+
