@@ -1,7 +1,7 @@
 /node_modules
 
 .env
-
+.pullrequest list
 .vscode
 .DS_Store
 .idea
