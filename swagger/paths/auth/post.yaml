@@ -1,1 +1,68 @@
-#
+tags:
+  - Auth
+summary: Registration new user
+operationId: registrationUser
+description: Registration new user
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+          type: object
+          required: 
+            - name
+            - email
+            - password
+          properties:
+            name:
+              type: string
+              maxLength: 32
+              example: "Анастасія"
+            email:
+              type: string
+              maxLength: 64
+              example: "test@mail.com"
+            password:
+              type: string
+              minLength: 8
+              maxLength: 128
+              example: "superpassword123"
+responses:
+  '201':
+    description: User successfully registered
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered a user!
+            data:
+              type: object
+              $ref: '../../components/schemas/user.yaml'
+  '409':
+    description: A user with this email already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+             type: integer
+             example: 409
+            message:
+              type: string
+              example: "Email in use"
+
