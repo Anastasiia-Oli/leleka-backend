@@ -1,7 +1,6 @@
-//
-// src/middlewares/authenticate.js
 import jwt from 'jsonwebtoken';
-import { User } from '../db/models/users.js';
+import createHttpError from 'http-errors';
+import { UsersCollection } from '../db/models/users.js';
 
 export const authenticate = async (req, res, next) => {
   try {
@@ -9,20 +8,19 @@ export const authenticate = async (req, res, next) => {
     const [bearer, token] = authHeader.split(' ');
 
     if (bearer !== 'Bearer' || !token) {
-      return res.status(401).json({ message: 'Not authorized' });
+      throw createHttpError(401, 'Not authorized');
     }
 
-    const { id } = jwt.verify(token, process.env.JWT_SECRET);
-
-    const user = await User.findById(id);
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await UsersCollection.findById(payload.id);
 
     if (!user || user.token !== token) {
-      return res.status(401).json({ message: 'Not authorized' });
+      throw createHttpError(401, 'Not authorized');
     }
 
     req.user = user;
     next();
-  } catch (e) {
-    res.status(401).json({ message: 'Not authorized' });
+  } catch (error) {
+    next(createHttpError(401, 'Not authorized'));
   }
 };
