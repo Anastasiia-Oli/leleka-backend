@@ -21,6 +21,6 @@ const taskSchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true },
+  { versionKey: false, timestamps: true },
 );
-export const TaskCollection = model('task', taskSchema);
+export const TaskCollection = model('tasks', taskSchema);

@@ -9,3 +9,6 @@ export const createTaskSchema = Joi.object({
     .required(),
   isDone: Joi.boolean().default(false),
 });
+export const updateStatusSchema = Joi.object({
+  isDone: Joi.boolean().required(),
+});

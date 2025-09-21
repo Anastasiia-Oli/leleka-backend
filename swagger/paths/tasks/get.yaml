@@ -4,6 +4,14 @@ summary: Get user tasks
 description: Get all tasks of the authenticated user
 security:
   - bearerAuth: []
+parameters:
+  - in: query
+    name: isDone
+    schema:
+      type: boolean
+      enum: [true, false]
+    required: false
+    description: Filter tasks by completion status
 responses:
   '200':
     description: List of tasks
@@ -19,3 +27,9 @@ responses:
               type: array
               items:
                 $ref: '../../components/schemas/tasks.yaml'
+  '401':
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/responses/401.yaml'

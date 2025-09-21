@@ -12,6 +12,20 @@ parameters:
     schema:
       type: string
     description: Task ID
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - isDone
+        properties:
+          isDone:
+            type: boolean
+            enum: [true, false]
+            description: New status for the task
+            example: true
 responses:
   '200':
     description: Status updated
