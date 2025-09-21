@@ -9,5 +9,5 @@ export async function updateUser(id, data) {
 }
 
 export async function updateAvatar(id, avatarPath) {
-  return await UsersCollection.findByAndUpdate(id, { photo: avatarPath }, { new: true });
+  return await UsersCollection.findByIdAndUpdate(id, { photo: avatarPath }, { new: true });
 }

@@ -13,25 +13,42 @@ export async function getCurrentUser (req,res ) {
 
 export async function updateUserData(req, res) {
   try {
-    const updatedUser = await updateUser(req.user.id, req.body);
-    if (!req.file)
-      return res.status(400).json({ message: 'Користувача не знайдено'});
-    res.json({ message: 'Дані оновлено', user: updatedUser});
-   } catch (error) {
-    res.status(500).json({ message: 'Помилка сервера' });
-    console.error(error);
-   }
-}
+    console.log("Decoded JWT payload:", req.user);
+    console.log("updateCurrentUserController -> req.body:", req.body);
 
-export async function updateUserAvatar ( req, res ) {
-  try{
-    if (!req.file)
-      return res.status(400).json({ message: 'Фай не завантажено'});
-    const updatedUser = await updateAvatar(req.user.id, `/uploads/${RegExp.file.filename}`);
-    res.json({ message: 'Аватар оновлено', user: updatedUser });
+    const updatedUser = await updateUser(req.user.id, req.body);
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'Користувача не знайдено' });
+    }
+
+    res.json({ message: 'Дані оновлено', user: updatedUser });
   } catch (error) {
+    console.error("updateCurrentUserController error:", error);
     res.status(500).json({ message: 'Помилка сервера' });
-    console.error(error);
   }
 }
+
+
+export async function updateUserAvatar(req, res) {
+  try {
+    console.log("Decoded JWT payload:", req.user);
+    console.log("updateCurrentUserController -> req.body:", req.body);
+    if (!req.file) {
+      return res.status(400).json({ message: 'Файл не завантажено' });
+    }
+
+    const updatedUser = await updateAvatar(req.user.id, req.file.path);
+
+    // if (!updatedUser) {
+    //   return res.status(404).json({ message: 'Користувача не знайдено' });
+    // }
+
+    res.json({ message: 'Аватар оновлено', user: updatedUser });
+  } catch (error) {
+    console.error("updateUserAvatar error:", error);
+    res.status(500).json({ message: 'Помилка сервера' });
+  }
+}
+
 
