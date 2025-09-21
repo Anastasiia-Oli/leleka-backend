@@ -1,1 +1,56 @@
 # створити приватний ендпоінт для оновлення даних користувача
+
+ tags:
+  - Users
+ summary: Оновлення даних користувача
+ operationId: updateUserData
+ description: Оновлює одне або декілька полів для поточного автентифікованого користувача.
+ security:
+  - bearerAuth: []
+
+
+ requestBody:
+   required: true
+   content:
+     application/json:
+       schema:
+         type: object
+         properties:
+           name:
+             type: string
+             example: "Ім'я користувача"
+           email:
+             type: string
+             example: "user@example.com"
+           childSex:
+             type: string
+             enum: ['Дівчинка', 'Хлопчик', 'Ще не знаю']
+             example: 'Дівчинка'
+           dueDate:
+             type: string
+             example: '2025-05-15'
+           password:
+             type: string
+             example: 'newpassword123'
+
+
+ responses:
+   '200':
+     description: Дані користувача успішно оновлено.
+     content:
+       application/json:
+         schema:
+           type: object
+           properties:
+             message:
+               type: string
+               example: Дані оновлено
+             user:
+               type: object
+               $ref: ../../components/schemas/user.yaml
+   '400':
+     description: Некоректні дані. Помилка валідації.
+   '403':
+     description: Доступ заборонено.
+   '404':
+     description: Користувача не знайдено.

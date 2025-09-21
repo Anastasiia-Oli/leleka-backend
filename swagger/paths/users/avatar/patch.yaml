@@ -1,1 +1,41 @@
 # створити приватний ендпоінт для оновлення аватару корситувача
+
+tags:
+ - Users
+summary: Оновлення аватара користувача
+operationId: updateUserAvatar
+description: Завантажує та оновлює аватар поточного користувача.
+security:
+ - bearerAuth: []
+
+
+requestBody:
+ required: true
+ content:
+   multipart/form-data:
+     schema:
+       type: object
+       properties:
+         avatar:
+           type: string
+           format: binary
+           description: Файл зображення для аватара.
+
+
+responses:
+  '200':
+    description: Аватар успішно оновлено
+    content:
+      application/json:
+       schema:
+         type: object
+         properties:
+           message:
+             type: string
+             example: Аватар оновлено
+           user:
+             $ref: ../../../components/schemas/user.yaml
+  '400':
+    description: Некоректний запит. Файл не завантажено або має неправильний формат.
+  '403':
+    description: Доступ заборонено (немає прав на зміну цього аватара).
