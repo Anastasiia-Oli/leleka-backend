@@ -8,7 +8,6 @@ const usersSchema = new Schema(
     childSex: {
       type: String,
       enum: ['Дівчинка', 'Хлопчик', 'Ще не знаю'],
-      default: 'Ще не знаю',
     },
     dueDate: {
       type: String,

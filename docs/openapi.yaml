@@ -35,6 +35,7 @@ paths:
   /users/avatar:
     patch:
       $ref: ../swagger/paths/users/avatar/patch.yaml
+
   /tasks:
     post:
       $ref: '../swagger/paths/tasks/post.yaml'
@@ -43,7 +44,12 @@ paths:
       $ref: '../swagger/paths/tasks/get.yaml'
   /tasks:
     patch:
-      $ref: '../swagger/paths/tasks/patch.yaml'
+      $ref: '../swagger/paths/tasks/{id}/patch.yaml'
+
+  /auth:
+    post: 
+      $ref: ../swagger/paths/auth/post.yaml
+
 components:
   securitySchemes:
     bearerAuth:
