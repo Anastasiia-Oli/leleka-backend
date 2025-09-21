@@ -8,8 +8,9 @@ const taskSchema = new Schema(
       maxLength: 96,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
+      default: () => new Date().toISOString().split('T')[0],
     },
     isDone: {
       type: Boolean,
