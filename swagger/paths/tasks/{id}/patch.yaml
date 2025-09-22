@@ -1,0 +1,64 @@
+tags:
+  - Tasks
+summary: Toggle task status
+description: Toggle task status (done/not done)
+operationId: updateTaskStatus
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+    description: Task ID
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - isDone
+        properties:
+          isDone:
+            type: boolean
+            enum: [true, false]
+            description: New status for the task
+            example: true
+responses:
+  '200':
+    description: Status updated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Status updated
+            data:
+              $ref: '../../components/schemas/tasks.yaml'
+  '404':
+    description: Task not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required: [status, message]
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Task not found
+  '401':
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/responses/401.yaml'

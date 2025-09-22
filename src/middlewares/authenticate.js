@@ -1,3 +1,4 @@
+
 import jwt from 'jsonwebtoken';
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/users.js';
@@ -24,3 +25,4 @@ export const authenticate = async (req, res, next) => {
     next(createHttpError(401, 'Not authorized'));
   }
 };
+

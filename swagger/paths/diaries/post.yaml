@@ -1,1 +1,29 @@
-#
+tags:
+  - Diaries
+summary: Створити новий запис
+description: Додає новий запис до щоденника поточного користувача.
+operationId: createDiary
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/diaries.yaml#/DiaryInput
+      example:
+        title: 'Перший привіт'
+        description: 'Це сталось! Сьогодні ввечері, коли я спокійно дивилась фільм...'
+        date: '2025-07-15'
+        emotions: ['натхнення', 'єдність']
+responses:
+  '201':
+    description: Запис створено
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/diaries.yaml#/Diary
+  '400':
+    description: Невірні дані у запиті
+  '401':
+    $ref: ../../components/responses/401.yaml

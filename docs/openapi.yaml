@@ -35,11 +35,45 @@ paths:
   /users/avatar:
     patch:
       $ref: ../swagger/paths/users/avatar/patch.yaml
+
+  # DIARIES
+  # -------------------------------
+  /diaries:
+    get: # 🔹 Отримати всі записи
+      $ref: ../swagger/paths/diaries/get.yaml
+    post: # 🔹 Створити новий запис
+      $ref: ../swagger/paths/diaries/post.yaml
+
+  /diaries/{id}:
+    patch: # 🔹 Редагувати запис
+      $ref: ../swagger/paths/diaries/{id}/patch.yaml
+    delete: # 🔹 Видалити запис
+      $ref: ../swagger/paths/diaries/{id}/delete.yaml
+
+  /tasks:
+    post:
+      $ref: '../swagger/paths/tasks/post.yaml'
+  /tasks:
+    get:
+      $ref: '../swagger/paths/tasks/get.yaml'
+  /tasks:
+    patch:
+      $ref: '../swagger/paths/tasks/{id}/patch.yaml'
+
   /auth:
-    post: 
+    post:
       $ref: ../swagger/paths/auth/post.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+  schemas:
+    Diary:
+      $ref: ../swagger/components/schemas/diaries.yaml#/Diary
+    DiaryInput:
+      $ref: ../swagger/components/schemas/diaries.yaml#/DiaryInput
