@@ -1,7 +1,17 @@
 apis:
-  main:
+  sample@v1:
     root: docs/openapi.yaml
-lint:
-  rules:
-    no-server-example.com: off
-    no-server-trailing-slash: off
+extends:
+  - recommended
+rules:
+  no-unused-components: error
+theme:
+  htmlTemplate: ./docs/index.html
+  colors:
+    primary:
+      main: '#32329f'
+  generateCodeSamples:
+    languages:
+      - lang: curl
+      - lang: Node.js
+      - lang: JavaScript

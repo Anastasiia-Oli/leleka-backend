@@ -22,7 +22,7 @@ servers:
   - url: https://nodejs-hw-mongodb-fe6r.onrender.com # change link after deploy --------
 paths:
   # створити приватний ендпоінт на отримання інформації про поточного користувача
-  /users/current:
+  /users/me:
     get:
       $ref: ../swagger/paths/users/me/get.yaml
 
