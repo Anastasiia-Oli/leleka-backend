@@ -10,7 +10,7 @@ const usersRouter = Router();
 
 usersRouter.get('/me', authenticateToken, getCurrentUser);
 usersRouter.patch('/update', authenticateToken, validateBody(updateSchema),updateUserData);
-usersRouter.post('/avatar', authenticateToken, upload.single('avatar'), updateUserAvatar);
+usersRouter.patch('/avatar', authenticateToken, upload.single('avatar'), updateUserAvatar);
 
 
 export default usersRouter;

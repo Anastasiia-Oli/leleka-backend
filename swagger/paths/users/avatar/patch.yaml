@@ -1,41 +1,74 @@
-# створити приватний ендпоінт для оновлення аватару корситувача
+openapi: 3.0.3
+info:
+  title: Users API
+  version: 1.0.0
+  description: API для роботи з користувачами (оновлення аватара).
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 
-tags:
- - Users
-summary: Оновлення аватара користувача
-operationId: updateUserAvatar
-description: Завантажує та оновлює аватар поточного користувача.
-security:
- - bearerAuth: []
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+  - url: https://api.example.com
+    description: Production server
 
+paths:
+  /users/avatar:
+    patch:
+      tags:
+        - Users
+      summary: Оновлення аватара користувача
+      operationId: updateUserAvatar
+      description: Завантажує та оновлює аватар поточного користувача.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+                  description: Файл зображення для аватара.
+      responses:
+        '200':
+          description: Аватар успішно оновлено
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Аватар оновлено
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Некоректний запит. Файл не завантажено або має неправильний формат.
+        '403':
+          description: Доступ заборонено (немає прав на зміну цього аватара).
 
-requestBody:
- required: true
- content:
-   multipart/form-data:
-     schema:
-       type: object
-       properties:
-         avatar:
-           type: string
-           format: binary
-           description: Файл зображення для аватара.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
-
-responses:
-  '200':
-    description: Аватар успішно оновлено
-    content:
-      application/json:
-       schema:
-         type: object
-         properties:
-           message:
-             type: string
-             example: Аватар оновлено
-           user:
-             $ref: ../../../components/schemas/user.yaml
-  '400':
-    description: Некоректний запит. Файл не завантажено або має неправильний формат.
-  '403':
-    description: Доступ заборонено (немає прав на зміну цього аватара).
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        email:
+          type: string
+          example: user@example.com
+        avatarUrl:
+          type: string
+          example: https://example.com/uploads/avatar.jpg
