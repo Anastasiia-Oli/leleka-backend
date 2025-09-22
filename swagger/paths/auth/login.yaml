@@ -1,0 +1,38 @@
+tags:
+  - Auth
+summary: Login user
+operationId: loginUser
+description: Login with email and password
+security: []
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            type: string
+            format: email
+            example: test@mail.com
+          password:
+            type: string
+            format: password
+            example: superpassword123
+
+responses:
+  '200':
+    description: Successfully logged in
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
