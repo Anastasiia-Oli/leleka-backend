@@ -1,11 +1,14 @@
-//
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 import { randomBytes } from 'crypto';
-
 import { UsersCollection } from '../db/models/users.js';
 import { SessionsCollection } from '../db/models/session.js';
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+
+
+export const logoutUser = async (userId) => {
+  return await UsersCollection.findByIdAndUpdate(userId, { token: null });
+};
 
 export const registerUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
@@ -62,5 +65,4 @@ export const loginUser = async (payload) => {
 
 //   return { user: newUser, token };
 // };
-
 

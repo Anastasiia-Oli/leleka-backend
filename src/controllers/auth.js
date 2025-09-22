@@ -1,6 +1,8 @@
 //
+import { registerUser , logoutUser} from '../services/auth.js';
 import { ONE_DAY } from '../constants/index.js';
 import { loginUser, registerUser } from '../services/auth.js';
+
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -11,6 +13,12 @@ export const registerUserController = async (req, res) => {
     data: user,
   });
 };
+
+export const logout = async (req, res) => {
+  await logoutUser(req.user._id);
+  res.status(204).send(); // No Content
+};
+
 
 
 export const loginUserController = async (req, res) => {
