@@ -1,28 +1,52 @@
-
-import jwt from 'jsonwebtoken';
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/users.js';
+import { SessionsCollection } from '../db/models/session.js';
 
 export const authenticate = async (req, res, next) => {
-  try {
-    const authHeader = req.headers.authorization || '';
-    const [bearer, token] = authHeader.split(' ');
+  // check authorization header
+  const authHeader = req.get('Authorization');
 
-    if (bearer !== 'Bearer' || !token) {
-      throw createHttpError(401, 'Not authorized');
-    }
-
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await UsersCollection.findById(payload.id);
-
-    if (!user || user.token !== token) {
-      throw createHttpError(401, 'Not authorized');
-    }
-
-    req.user = user;
-    next();
-  } catch (error) {
-    next(createHttpError(401, 'Not authorized'));
+  if (!authHeader) {
+    next(createHttpError(401, 'Please provide Authorization header'));
+    return;
   }
-};
 
+  // check header type and token presence
+  const bearer = authHeader.split(' ')[0];
+  const token = authHeader.split(' ')[1];
+
+  if (bearer !== 'Bearer' || !token) {
+    next(createHttpError(401, 'Auth header should be of type Bearer'));
+    return;
+  }
+
+  // check session presence
+  const session = await SessionsCollection.findOne({ accessToken: token });
+
+  if (!session) {
+    next(createHttpError(401, 'Session not found'));
+    return;
+  }
+
+  // check access token expiration
+  const isAccessTokenExpired =
+    new Date() > new Date(session.accessTokenValidUntil);
+
+  if (isAccessTokenExpired) {
+    next(createHttpError(401, 'Access token expired'));
+    return;
+  }
+
+  // user lookup
+  const user = await UsersCollection.findById(session.userId);
+
+  if (!user) {
+    next(createHttpError(401, 'User not found'));
+    return;
+  }
+
+  // add user to request
+  req.user = user;
+
+  next();
+};

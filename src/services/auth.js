@@ -5,9 +5,8 @@ import { UsersCollection } from '../db/models/users.js';
 import { SessionsCollection } from '../db/models/session.js';
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 
-
-export const logoutUser = async (userId) => {
-  return await UsersCollection.findByIdAndUpdate(userId, { token: null });
+export const logoutUser = async (sessionId) => {
+  await SessionsCollection.deleteOne({ _id: sessionId });
 };
 
 export const registerUser = async (payload) => {
@@ -53,7 +52,6 @@ export const loginUser = async (payload) => {
 //   const user = await UsersCollection.findOne({ email: payload.email });
 //   if (user) throw createHttpError(409, 'Email in use');
 
-
 //   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
 //   const newUser = await UsersCollection.create({
@@ -65,4 +63,3 @@ export const loginUser = async (payload) => {
 
 //   return { user: newUser, token };
 // };
-

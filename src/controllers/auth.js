@@ -1,8 +1,5 @@
-//
-import { registerUser , logoutUser} from '../services/auth.js';
 import { ONE_DAY } from '../constants/index.js';
-import { loginUser, registerUser } from '../services/auth.js';
-
+import { loginUser, registerUser, logoutUser } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -15,11 +12,17 @@ export const registerUserController = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  await logoutUser(req.user._id);
-  res.status(204).send(); // No Content
+  if (req.cookies.sessionId) {
+    await logoutUser(req.cookies.sessionId);
+  } // checking for sessionId
+
+  // clear cookie
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
+
+  // send answer to client
+  res.status(204).send();
 };
-
-
 
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
@@ -42,7 +45,6 @@ export const loginUserController = async (req, res) => {
   });
 };
 
-
 // import { registerUser } from '../services/auth.js';
 
 // export const registerUserController = async (req, res) => {
@@ -61,4 +63,3 @@ export const loginUserController = async (req, res) => {
 //     });
 //   }
 // };
-
