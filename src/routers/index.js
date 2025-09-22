@@ -9,8 +9,9 @@ const router = Router();
 
 router.use('/contacts', usersRouter);
 router.use('/auth', authRouter);
+router.use('/users', usersRouter);
 router.use('/tasks', tasksRouter);
-
 router.use('/diaries', diariesRouter);
+
 
 export default router;

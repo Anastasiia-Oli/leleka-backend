@@ -8,3 +8,6 @@ const authRouter = Router();
 authRouter.post('/register', validateBody(registerUserSchema), registerUserController);
 
 export default authRouter;
+
+
+
