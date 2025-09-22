@@ -46,10 +46,13 @@ paths:
 
   /diaries/{id}:
     patch: # 🔹 Редагувати запис
-      $ref: ../swagger/paths/diaries/patch.yaml
+      $ref: ../swagger/paths/diaries/{id}/patch.yaml
     delete: # 🔹 Видалити запис
-      $ref: ../swagger/paths/diaries/delete.yaml
+      $ref: ../swagger/paths/diaries/{id}/delete.yaml
 
+  /auth:
+    post:
+      $ref: ../swagger/paths/auth/post.yaml
 components:
   securitySchemes:
     bearerAuth:

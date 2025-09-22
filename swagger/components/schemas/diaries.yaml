@@ -19,7 +19,7 @@ Diary:
       items:
         type: string
       example: ['натхнення', 'єдність']
-    owner:
+    user:
       type: string
       example: '64f0c0d1f0a5b2c3d4e5f6a7'
     createdAt:

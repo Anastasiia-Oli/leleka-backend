@@ -13,18 +13,9 @@ parameters:
       type: string
     description: ID запису
 responses:
-  '200':
+  '204':
     description: Запис успішно видалено
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            message:
-              type: string
-        example:
-          message: 'Запис видалено'
   '401':
-    $ref: ../../components/responses/401.yaml
+    $ref: ../../../components/responses/401.yaml
   '404':
-    $ref: ../../components/responses/404.yaml
+    $ref: ../../../components/responses/404.yaml

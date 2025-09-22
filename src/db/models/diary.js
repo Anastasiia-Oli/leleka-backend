@@ -26,7 +26,7 @@ const diarySchema = new Schema(
         message: 'Має бути від 1 до 12 емоцій',
       },
     },
-    owner: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,

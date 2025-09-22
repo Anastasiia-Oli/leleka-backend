@@ -10,7 +10,7 @@ export const createDiary = async (req, res, next) => {
   try {
     const newDiary = await createDiaryService({
       ...req.body,
-      ownerId: req.user._id,
+      userId: req.user._id,
     });
     res.status(201).json(newDiary);
   } catch (error) {
@@ -47,8 +47,10 @@ export const updateDiary = async (req, res, next) => {
 export const deleteDiary = async (req, res, next) => {
   try {
     const diary = await deleteDiaryService(req.params.id, req.user._id);
-    if (!diary) return res.status(404).json({ message: 'Запис не знайдено' });
-    res.json({ message: 'Запис видалено' });
+    if (!diary) {
+      return res.status(404).json({ message: 'Запис не знайдено' });
+    }
+    return res.status(204).end();
   } catch (error) {
     next(error);
   }
