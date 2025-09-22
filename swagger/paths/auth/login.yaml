@@ -2,7 +2,9 @@ tags:
   - Auth
 summary: Login user
 operationId: loginUser
-description: 'Login with email and password'
+description: Login with email and password
+security: []
+
 requestBody:
   required: true
   content:
@@ -16,11 +18,12 @@ requestBody:
           email:
             type: string
             format: email
-            example: test@gmail.com
+            example: test@mail.com
           password:
             type: string
             format: password
-            example: 12345678
+            example: superpassword123
+
 responses:
   '200':
     description: Successfully logged in
@@ -28,18 +31,8 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
-            status:
-              type: integer
-              example: 200
-            message:
-              type: string
-              example: Successfully logged in a user!
-            data:
-              type: object
-              properties:
-                accessToken:
-                  type: string
-                  example: eyJh...jwtToken
-  '401':
-    description: Invalid credentials
