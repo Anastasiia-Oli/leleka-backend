@@ -1,0 +1,5 @@
+description: 'Full week data retrieved successfully'
+content:
+  application/json:
+    schema:
+      $ref: '../../schemas/weeks/weekData.yaml'

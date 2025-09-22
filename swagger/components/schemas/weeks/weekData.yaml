@@ -1,0 +1,12 @@
+type: object
+properties:
+  weekNumber:
+    type: integer
+    example: 1
+  baby:
+    $ref: './babyData.yaml'
+  mom:
+    $ref: './momData.yaml'
+  daysLeft:
+    type: integer
+    example: 280

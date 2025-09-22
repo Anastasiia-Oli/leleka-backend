@@ -1,0 +1,5 @@
+description: 'Mom data retrieved successfully'
+content:
+  application/json:
+    schema:
+      $ref: '../../schemas/weeks/momData.yaml'

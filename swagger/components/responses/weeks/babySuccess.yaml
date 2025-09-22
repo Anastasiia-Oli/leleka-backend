@@ -1,0 +1,5 @@
+description: 'Baby data retrieved successfully'
+content:
+  application/json:
+    schema:
+      $ref: '../../schemas/weeks/babyData.yaml'

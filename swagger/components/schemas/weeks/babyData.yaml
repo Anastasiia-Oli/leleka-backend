@@ -1,0 +1,34 @@
+type: object
+properties:
+  weekNumber:
+    type: integer
+    example: 1
+  analogy:
+    type: string
+    nullable: true
+    example: null
+  babySize:
+    type: number
+    example: 0
+  babyWeight:
+    type: number
+    example: 0
+  image:
+    type: string
+    example: 'https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af25.webp'
+  babyActivity:
+    type: string
+    example: 'At this stage of pregnancy, there is no fetal activity yet.'
+  babyDevelopment:
+    type: string
+    example: 'Technically, fertilization has not yet occurred.'
+  interestingFact:
+    type: string
+    example: 'Around 60% of women do not realize pregnancy is counted from 2 weeks before fertilization.'
+  momDailyTips:
+    type: array
+    items:
+      type: string
+    example:
+      - 'Start taking folic acid (400 mcg daily).'
+      - 'Eat fruits and vegetables daily.'

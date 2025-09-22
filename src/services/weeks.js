@@ -1,19 +1,9 @@
-import fs from 'fs';
-import path from 'path';
+import { BabyState } from '../db/models/babyStates.js';
+import { MomStates } from '../db/models/momStates.js';
 
-const babyWeeks = JSON.parse(
-  fs.readFileSync(
-    path.resolve('./src/data/lehlehka.baby_states.json'),
-    'utf-8',
-  ),
-);
-const momWeeks = JSON.parse(
-  fs.readFileSync(path.resolve('./src/data/lehlehka.mom_states.json'), 'utf-8'),
-);
-
-export const getWeekData = (weekNumber, dueDate) => {
-  const baby = babyWeeks.find((w) => w.weekNumber === weekNumber);
-  const mom = momWeeks.find((w) => w.weekNumber === weekNumber);
+export const getWeekData = async (weekNumber, dueDate) => {
+  const baby = await BabyState.findOne({ weekNumber }).lean();
+  const mom = await MomStates.findOne({ weekNumber }).lean();
 
   if (!baby || !mom) return null;
 
@@ -35,7 +25,8 @@ export const getWeekData = (weekNumber, dueDate) => {
   };
 };
 
-export const getBabyData = (weekNumber) =>
-  babyWeeks.find((w) => w.weekNumber === weekNumber) || null;
-export const getMomData = (weekNumber) =>
-  momWeeks.find((w) => w.weekNumber === weekNumber) || null;
+export const getBabyData = async (weekNumber) =>
+  (await BabyState.findOne({ weekNumber }).lean()) || null;
+
+export const getMomData = async (weekNumber) =>
+  (await MomStates.findOne({ weekNumber }).lean()) || null;

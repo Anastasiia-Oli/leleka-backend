@@ -1,0 +1,31 @@
+get:
+  summary: 'Get full week data for authorized user'
+  description: "Returns baby and mom data for the given week number, using user's due date if available."
+  parameters:
+    - in: path
+      name: weekNumber
+      schema:
+        type: integer
+      required: true
+      description: 'Number of the week (1-40)'
+  responses:
+    '200':
+      $ref: '../../../responses/weeks/weekSuccess.yaml'
+    '404':
+      $ref: '../../components/responses/404.yaml'
+
+getPublic:
+  get:
+    summary: 'Get public week data'
+    description: 'Returns week data without requiring user authorization.'
+    parameters:
+      - in: path
+        name: weekNumber
+        schema:
+          type: integer
+        required: true
+    responses:
+      '200':
+        $ref: '../../../responses/weeks/weekSuccess.yaml'
+      '404':
+        $ref: '../../components/responses/404.yaml'
