@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authenticateToken } from '../middlewares/auth.js';
+import { authenticate } from '../middlewares/authenticate.js';
 import {
   getCurrentUser,
   updateUserData,
@@ -11,18 +11,12 @@ import { updateSchema } from '../validation/users.js';
 
 const usersRouter = Router();
 
-usersRouter.get('/current', authenticateToken, getCurrentUser);
-usersRouter.patch(
-  '/',
-  authenticateToken,
-  validateBody(updateSchema),
-  updateUserData,
-);
-usersRouter.patch(
-  '/avatar',
-  authenticateToken,
-  upload.single('avatar'),
-  updateUserAvatar,
-);
+usersRouter.use(authenticate);
+
+usersRouter.get('/current', getCurrentUser);
+
+usersRouter.patch('/', validateBody(updateSchema), updateUserData);
+
+usersRouter.patch('/avatar', upload.single('avatar'), updateUserAvatar);
 
 export default usersRouter;
