@@ -1,1 +1,89 @@
-# створити приватний ендпоінт для оновлення даних користувача
+openapi: 3.0.3
+info:
+  title: Users API
+  version: 1.0.0
+  description: API для роботи з користувачами (оновлення даних поточного користувача).
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+  - url: https://api.example.com
+    description: Production server
+
+paths:
+  /users/me:
+    patch:
+      tags:
+        - Users
+      summary: Оновлення даних користувача
+      operationId: updateCurrentUser
+      description: Оновлює профіль поточного користувача. Можна передавати лише ті поля, які треба змінити.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Олександр
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                avatarUrl:
+                  type: string
+                  format: uri
+                  example: https://example.com/uploads/avatar.jpg
+              additionalProperties: false
+      responses:
+        '200':
+          description: Дані користувача успішно оновлено
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Дані користувача оновлено
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Некоректний запит (наприклад, неправильний email).
+        '401':
+          description: Неавторизований (немає або невірний токен).
+        '403':
+          description: Доступ заборонено (користувач не може редагувати цей профіль).
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        name:
+          type: string
+          example: Олександр
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        avatarUrl:
+          type: string
+          format: uri
+          example: https://example.com/uploads/avatar.jpg

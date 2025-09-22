@@ -17,3 +17,6 @@ authRouter.post(
 authRouter.post('/login', validateBody(loginUserSchema), loginUserController);
 
 export default authRouter;
+
+
+

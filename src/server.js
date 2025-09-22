@@ -27,6 +27,8 @@ export const setupServer = () => {
     }),
   );
 
+
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
@@ -39,6 +41,7 @@ export const setupServer = () => {
 
   // router for auth, users and so on
   app.use(router);
+
 
   // handlers for errors
   app.use(notFoundHandler);
