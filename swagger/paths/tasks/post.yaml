@@ -1,1 +1,57 @@
-#
+tags:
+  - Tasks
+summary: Create a new task
+description: Create a new task for the authenticated user
+operationId: createTask
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - text
+          - date
+        properties:
+          text:
+            type: string
+            minLength: 1
+            maxLength: 96
+            example: 'Buy baby clothes'
+          date:
+            type: string
+            format: date
+            description: 'Date in format YYYY-MM-DD, not earlier than current date'
+            example: '2025-09-25'
+          isDone:
+            type: boolean
+            enum: [true, false]
+            default: false
+responses:
+  '201':
+    description: Task created
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Task created
+            data:
+              $ref: ../../components/schemas/tasks.yaml
+  '401':
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/responses/401.yaml
