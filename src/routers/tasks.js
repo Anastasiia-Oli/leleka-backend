@@ -17,7 +17,7 @@ tasksRouter.post(
 );
 tasksRouter.get('/', ctrlWrapper(getTaskController));
 tasksRouter.patch(
-  '/:id',
+  '/:id/status',
   validateBody(updateStatusSchema),
   ctrlWrapper(updateTaskStatusController),
 );

@@ -40,7 +40,7 @@
     }
   ],
   "paths": {
-    "/users/current": {
+    "/api/users/current": {
       "get": {
         "tags": [
           "Users"
@@ -82,7 +82,7 @@
         }
       }
     },
-    "/users": {
+    "/api/users": {
       "patch": {
         "tags": [
           "Users"
@@ -153,7 +153,7 @@
         }
       }
     },
-    "/users/avatar": {
+    "/api/users/avatar": {
       "patch": {
         "tags": [
           "Users"
@@ -212,7 +212,7 @@
         }
       }
     },
-    "/diaries": {
+    "/api/diaries": {
       "get": {
         "tags": [
           "Diaries"
@@ -310,7 +310,7 @@
         }
       }
     },
-    "/diaries/{id}": {
+    "/api/diaries/{id}": {
       "patch": {
         "tags": [
           "Diaries"
@@ -411,7 +411,7 @@
         }
       }
     },
-    "/tasks": {
+    "/api/tasks": {
       "post": {
         "tags": [
           "Tasks"
@@ -564,7 +564,7 @@
         }
       }
     },
-    "/tasks/{id}": {
+    "/api/tasks/{id}/status": {
       "patch": {
         "tags": [
           "Tasks"
@@ -673,7 +673,7 @@
         }
       }
     },
-    "/auth/logout": {
+    "/api/auth/logout": {
       "post": {
         "tags": [
           "Auth"
@@ -717,7 +717,7 @@
         }
       }
     },
-    "/auth/login": {
+    "/api/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -788,7 +788,7 @@
         }
       }
     },
-    "/auth/registration": {
+    "/api/auth/register": {
       "post": {
         "tags": [
           "Auth"
@@ -796,11 +796,7 @@
         "summary": "Registration new user",
         "operationId": "registrationUser",
         "description": "Registration new user",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {

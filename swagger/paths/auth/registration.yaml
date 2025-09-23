@@ -3,31 +3,30 @@ tags:
 summary: Registration new user
 operationId: registrationUser
 description: Registration new user
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   content:
     application/json:
       schema:
-          type: object
-          required: 
-            - name
-            - email
-            - password
-          properties:
-            name:
-              type: string
-              maxLength: 32
-              example: "Анастасія"
-            email:
-              type: string
-              maxLength: 64
-              example: "test@mail.com"
-            password:
-              type: string
-              minLength: 8
-              maxLength: 128
-              example: "superpassword123"
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            type: string
+            maxLength: 32
+            example: 'Анастасія'
+          email:
+            type: string
+            maxLength: 64
+            example: 'test@mail.com'
+          password:
+            type: string
+            minLength: 8
+            maxLength: 128
+            example: 'superpassword123'
 responses:
   '201':
     description: User successfully registered
@@ -60,8 +59,8 @@ responses:
             - message
           properties:
             status:
-             type: integer
-             example: 409
+              type: integer
+              example: 409
             message:
               type: string
-              example: "Email in use"
+              example: 'Email in use'
