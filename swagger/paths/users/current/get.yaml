@@ -10,16 +10,16 @@ responses:
   '200':
     description: Дані користувача успішно отримано.
     content:
-    application/json:
-      schema:
-      type: object
-      properties:
-        user:
+      application/json:
+        schema:
           type: object
-          $ref: ../../../components/schemas/user.yaml
+          properties:
+            user:
+              type: object
+              $ref: ../../../components/schemas/user.yaml
   '401':
-    description: Неавтентифікований запит. Відсутній або недійсний JWT-токен.
+    $ref: ../../../components/responses/401.yaml
   '404':
-    description: Користувача не знайдено.
+    $ref: ../../../components/responses/404.yaml
   '500':
     description: Помилка сервера.

@@ -41,9 +41,9 @@ responses:
               example: 201
             message:
               type: string
-              example: Successfully created a contact!
+              example: Successfully created a user!
             data:
               type: object
-              $ref: '../../components/schemas/contact.yaml'
+              $ref: ../../components/schemas/user.yaml
   '401':
     $ref: '../../components/responses/401.yaml'

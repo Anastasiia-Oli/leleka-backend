@@ -41,7 +41,7 @@ responses:
               type: string
               example: Status updated
             data:
-              $ref: '../../components/schemas/tasks.yaml'
+              $ref: '../../../components/schemas/tasks.yaml'
   '404':
     description: Task not found
     content:
@@ -61,4 +61,4 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '../../components/responses/401.yaml'
+          $ref: '../../../components/responses/401.yaml'
