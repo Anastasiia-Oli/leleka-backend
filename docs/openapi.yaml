@@ -59,7 +59,7 @@ paths:
     patch:
       $ref: '../swagger/paths/tasks/{id}/patch.yaml'
 
-  /auth:
+  /auth/logout:
     post:
       $ref: ../swagger/paths/auth/post.yaml
   /auth/login:
