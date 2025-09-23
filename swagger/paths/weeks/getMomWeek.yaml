@@ -1,0 +1,30 @@
+get:
+  summary: 'Get mom data for specific week'
+  description: 'Returns only mom data for the given week number.'
+  parameters:
+    - in: path
+      name: weekNumber
+      schema:
+        type: integer
+      required: true
+  responses:
+    '200':
+      description: Successful response with mom data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Success
+              weekNumber:
+                type: integer
+                example: 1
+              mom:
+                $ref: '../../components/schemas/weeks/momData.yaml'
+    '404':
+      $ref: '../../components/responses/404.yaml'

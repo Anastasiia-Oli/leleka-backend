@@ -50,15 +50,15 @@ paths:
     post:
       $ref: ../swagger/paths/auth/post.yaml
 
-  # --- Weeks endpoints ---
-  /weeks/{weekNumber}:
-    $ref: '../swagger/paths/weeks/index.yaml'
+      # --- Weeks endpoints ---
   /weeks/public/{weekNumber}:
-    $ref: '../swagger/paths/weeks/index.yaml'
+    $ref: '../swagger/paths/weeks/getWeek.yaml'
+  /weeks/{weekNumber}:
+    $ref: '../swagger/paths/weeks/getWeek.yaml'
   /weeks/baby/{weekNumber}:
-    $ref: '../swagger/paths/weeks/baby.yaml'
+    $ref: '../swagger/paths/weeks/getBabyWeek.yaml'
   /weeks/mom/{weekNumber}:
-    $ref: '../swagger/paths/weeks/mom.yaml'
+    $ref: '../swagger/paths/weeks/getMomWeek.yaml'
 
 components:
   securitySchemes:
@@ -77,9 +77,3 @@ components:
   responses:
     NotFound:
       $ref: '../swagger/components/responses/404.yaml'
-    WeekSuccess:
-      $ref: '../swagger/responses/weeks/weekSuccess.yaml'
-    BabySuccess:
-      $ref: '../swagger/responses/weeks/babySuccess.yaml'
-    MomSuccess:
-      $ref: '../swagger/responses/weeks/momSuccess.yaml'

@@ -4,6 +4,7 @@ import { ctrlWrapper } from '../controllers/ctrlWrapper.js';
 
 const weeksRouter = express.Router();
 
+weeksRouter.get('/public/:weekNumber', ctrlWrapper(getWeek));
 weeksRouter.get(
   '/:weekNumber',
   (req, res, next) => {
@@ -12,8 +13,6 @@ weeksRouter.get(
   },
   ctrlWrapper(getWeek),
 );
-
-weeksRouter.get('/public/:weekNumber', ctrlWrapper(getWeek));
 weeksRouter.get('/baby/:weekNumber', ctrlWrapper(getBabyWeek));
 weeksRouter.get('/mom/:weekNumber', ctrlWrapper(getMomWeek));
 

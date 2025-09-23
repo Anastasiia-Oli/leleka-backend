@@ -10,23 +10,42 @@ export const getWeek = async (req, res) => {
     return res.status(404).json({ message: 'Week not found' });
   }
 
-  res.json(data);
+  res.status(200).json({
+    status: 200,
+    message: 'Success',
+    weekNumber,
+    data,
+  });
 };
 
 export const getBabyWeek = async (req, res) => {
   const weekNumber = parseInt(req.params.weekNumber, 10);
   const baby = await getBabyData(weekNumber);
 
-  if (!baby) return res.status(404).json({ message: 'Week not found' });
+  if (!baby) {
+    return res.status(404).json({ message: 'Week not found' });
+  }
 
-  res.json({ weekNumber, baby });
+  res.status(200).json({
+    status: 200,
+    message: 'Success',
+    weekNumber,
+    baby,
+  });
 };
 
 export const getMomWeek = async (req, res) => {
   const weekNumber = parseInt(req.params.weekNumber, 10);
   const mom = await getMomData(weekNumber);
 
-  if (!mom) return res.status(404).json({ message: 'Week not found' });
+  if (!mom) {
+    return res.status(404).json({ message: 'Week not found' });
+  }
 
-  res.json({ weekNumber, mom });
+  res.status(200).json({
+    status: 200,
+    message: 'Success',
+    weekNumber,
+    mom,
+  });
 };
