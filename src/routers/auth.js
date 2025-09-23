@@ -8,6 +8,7 @@ import {
   registerUserController,
 } from '../controllers/auth.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { refreshUserSessionController } from '../controllers/auth.js';
 
 const authRouter = Router();
 
