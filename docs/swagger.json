@@ -1,1 +1,1095 @@
-{}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Diary app",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "This is a documentation of diary app"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://leleka-backend-1.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth operations."
+    },
+    {
+      "name": "Users",
+      "description": "Users operations."
+    },
+    {
+      "name": "Tasks",
+      "description": "Tasks operations."
+    },
+    {
+      "name": "Diaries",
+      "description": "Diaries operations."
+    },
+    {
+      "name": "Weeks",
+      "description": "Weeks operations."
+    }
+  ],
+  "paths": {
+    "/users/current": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Отримати дані поточного користувача",
+        "operationId": "getCurrentUser",
+        "description": "Повертає дані поточного автентифікованого користувача.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Дані користувача успішно отримано.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "description": "Помилка сервера."
+          }
+        }
+      }
+    },
+    "/users": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Оновлення даних користувача",
+        "operationId": "updateCurrentUser",
+        "description": "Оновлює профіль поточного користувача. Можна передавати лише ті поля, які треба змінити.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Олександр"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com"
+                  },
+                  "avatarUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "example": "https://example.com/uploads/avatar.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Дані користувача успішно оновлено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Дані користувача оновлено"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некоректний запит (наприклад, неправильний email)."
+          },
+          "401": {
+            "description": "Неавторизований (немає або невірний токен)."
+          },
+          "403": {
+            "description": "Доступ заборонено (користувач не може редагувати цей профіль)."
+          }
+        }
+      }
+    },
+    "/users/avatar": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Оновлення аватара користувача",
+        "operationId": "updateUserAvatar",
+        "description": "Завантажує та оновлює аватар поточного користувача.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Файл зображення для аватара."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Аватар успішно оновлено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Аватар оновлено"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некоректний запит. Файл не завантажено або має неправильний формат."
+          },
+          "403": {
+            "description": "Доступ заборонено (немає прав на зміну цього аватара)."
+          }
+        }
+      }
+    },
+    "/diaries": {
+      "get": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Отримати всі записи щоденника",
+        "description": "Повертає список усіх записів користувача, відсортованих від нових до старих.",
+        "operationId": "getDiaries",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список записів",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/diaries"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "64f0c0d1f0a5b2c3d4e5f6a7",
+                    "title": "Перший привіт",
+                    "description": "Це сталось! Сьогодні ввечері, коли я спокійно дивилась фільм...",
+                    "date": "2025-07-15",
+                    "emotions": [
+                      "натхнення",
+                      "єдність"
+                    ],
+                    "userId": "64f0c0d1f0a5b2c3d4e5f6a7",
+                    "createdAt": "2025-07-15T20:00:00Z",
+                    "updatedAt": "2025-07-15T20:05:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Створити новий запис",
+        "description": "Додає новий запис до щоденника поточного користувача.",
+        "operationId": "createDiary",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/diariesInput"
+              },
+              "example": {
+                "title": "Перший привіт",
+                "description": "Це сталось! Сьогодні ввечері, коли я спокійно дивилась фільм...",
+                "date": "2025-07-15",
+                "emotions": [
+                  "натхнення",
+                  "єдність"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Запис створено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/diaries"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Невірні дані у запиті"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/diaries/{id}": {
+      "patch": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Редагувати запис",
+        "description": "Оновлює дані одного запису за його ID.",
+        "operationId": "updateDiary",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID запису"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/diariesInput"
+              },
+              "example": {
+                "title": "Оновлений заголовок",
+                "description": "Оновлений опис...",
+                "date": "2025-07-16",
+                "emotions": [
+                  "радість",
+                  "щастя"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Оновлений запис",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/diaries"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Невірні дані у запиті"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Diaries"
+        ],
+        "summary": "Видалити запис",
+        "description": "Видаляє запис за його ID.",
+        "operationId": "deleteDiary",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID запису"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Запис успішно видалено"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create a new task",
+        "description": "Create a new task for the authenticated user",
+        "operationId": "createTask",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "text",
+                  "date"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 96,
+                    "example": "Buy baby clothes"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date in format YYYY-MM-DD, not earlier than current date",
+                    "example": "2025-09-25"
+                  },
+                  "isDone": {
+                    "type": "boolean",
+                    "enum": [
+                      true,
+                      false
+                    ],
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Task created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Task created"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/tasks"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get user tasks",
+        "operationId": "getTasks",
+        "description": "Get all tasks of the authenticated user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "isDone",
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ]
+            },
+            "required": false,
+            "description": "Filter tasks by completion status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tasks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tasks"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Toggle task status",
+        "description": "Toggle task status (done/not done)",
+        "operationId": "updateTaskStatus",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Task ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "isDone"
+                ],
+                "properties": {
+                  "isDone": {
+                    "type": "boolean",
+                    "enum": [
+                      true,
+                      false
+                    ],
+                    "description": "New status for the task",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Status updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Status updated"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/tasks"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Task not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout user",
+        "operationId": "logoutUser",
+        "description": "Logout currently authenticated user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully logged out (No Content)"
+          },
+          "401": {
+            "description": "Unauthorized (invalid or expired token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login user",
+        "operationId": "loginUser",
+        "description": "Login with email and password",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "test@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "superpassword123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User unique identifier (ObjectId)",
+            "example": "650f1c7b8f1d2c001234abcd"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "maxLength": 32,
+            "example": "Анастасія"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email (must be unique)",
+            "maxLength": 64,
+            "example": "test@mail.com"
+          },
+          "childSex": {
+            "type": "string",
+            "description": "Gender of the child",
+            "enum": [
+              "Дівчинка",
+              "Хлопчик",
+              "Ще не знаю"
+            ],
+            "example": "Хлопчик"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Expected due date (YYYY-MM-DD)",
+            "example": "2025-11-01"
+          },
+          "photo": {
+            "type": "string",
+            "format": "binary",
+            "description": "Link to user photo",
+            "example": "https://example.com/uploads/avatar.jpg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of user creation",
+            "example": "2025-09-18T12:34:56.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of last update",
+            "example": "2025-09-18T15:20:30.000Z"
+          }
+        }
+      },
+      "diaries": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64f0c0d1f0a5b2c3d4e5f6a7"
+          },
+          "title": {
+            "type": "string",
+            "example": "Перший привіт"
+          },
+          "description": {
+            "type": "string",
+            "example": "Це сталось! Сьогодні ввечері, коли я спокійно дивилась фільм..."
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-07-15"
+          },
+          "emotions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "натхнення",
+              "єдність"
+            ]
+          },
+          "userId": {
+            "type": "string",
+            "example": "64f0c0d1f0a5b2c3d4e5f6a7"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-07-15T20:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-07-15T20:05:00Z"
+          }
+        }
+      },
+      "diariesInput": {
+        "type": "object",
+        "required": [
+          "title",
+          "description",
+          "emotions"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "emotions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "tasks": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "650d1f6bc0bdfd1e84a5e9b3"
+          },
+          "text": {
+            "type": "string",
+            "example": "Buy baby clothes"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-25"
+          },
+          "isDone": {
+            "type": "boolean",
+            "enum": [
+              true,
+              false
+            ],
+            "default": false
+          },
+          "userId": {
+            "type": "string",
+            "example": "64fd92b0c6c7e2f2e8b94a15"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-19T10:15:30.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-19T10:15:30.000Z"
+          }
+        },
+        "required": [
+          "text",
+          "date",
+          "isDone"
+        ]
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

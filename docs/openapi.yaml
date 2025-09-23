@@ -71,8 +71,3 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-  schemas:
-    Diary:
-      $ref: ../swagger/components/schemas/diaries.yaml
-    DiaryInput:
-      $ref: ../swagger/components/schemas/diariesInput.yaml
