@@ -19,7 +19,7 @@ tags:
     description: Weeks operations.
 servers:
   - url: http://localhost:3000
-  - url: https://nodejs-hw-mongodb-fe6r.onrender.com # change link after deploy --------
+  - url: https://leleka-backend-1.onrender.com
 paths:
   # створити приватний ендпоінт на отримання інформації про поточного користувача
   /users/current:
