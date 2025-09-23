@@ -1,4 +1,11 @@
 type: object
+required:
+  - weekNumber
+  - image
+  - babyActivity
+  - babyDevelopment
+  - interestingFact
+  - momDailyTips
 properties:
   weekNumber:
     type: integer
@@ -28,6 +35,7 @@ properties:
     type: array
     items:
       type: string
+    minItems: 1
     example:
       - 'Start taking folic acid (400 mcg daily).'
       - 'Eat fruits and vegetables daily.'

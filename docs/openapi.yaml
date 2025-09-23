@@ -66,29 +66,26 @@ paths:
     post:
       $ref: ../swagger/paths/auth/login.yaml
 
-      # --- Weeks endpoints ---
-  /weeks/public/{weekNumber}:
-    $ref: '../swagger/paths/weeks/getWeek.yaml'
   /weeks/{weekNumber}:
-    $ref: '../swagger/paths/weeks/getWeek.yaml'
-  /weeks/baby/{weekNumber}:
-    $ref: '../swagger/paths/weeks/getBabyWeek.yaml'
-  /weeks/mom/{weekNumber}:
-    $ref: '../swagger/paths/weeks/getMomWeek.yaml'
+    get:
+      $ref: ../swagger/paths/weeks/get.yaml
 
+  /weeks/baby/{weekNumber}:
+    get:
+      $ref: ../swagger/paths/weeks/baby.yaml
+
+  /weeks/mom/{weekNumber}:
+    get:
+      $ref: ../swagger/paths/weeks/mom.yaml
+
+  /weeks/public/{weekNumber}:
+    get:
+      $ref: ../swagger/paths/weeks/public.yaml
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-
-  schemas:
-    BabyData:
-      $ref: '../swagger/schemas/weeks/babyData.yaml'
-    MomData:
-      $ref: '../swagger/schemas/weeks/momData.yaml'
-    WeekData:
-      $ref: '../swagger/schemas/weeks/weekData.yaml'
 
   responses:
     NotFound:
