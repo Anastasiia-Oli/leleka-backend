@@ -7,8 +7,10 @@ import {
   getTaskController,
   updateTaskStatusController,
 } from '../controllers/tasks.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const tasksRouter = Router();
+tasksRouter.use(authenticate);
 
 tasksRouter.post(
   '/',
