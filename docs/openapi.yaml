@@ -53,10 +53,9 @@ paths:
   /tasks:
     post:
       $ref: '../swagger/paths/tasks/post.yaml'
-  /tasks:
     get:
       $ref: '../swagger/paths/tasks/get.yaml'
-  /tasks:
+  /tasks/{id}:
     patch:
       $ref: '../swagger/paths/tasks/{id}/patch.yaml'
 
