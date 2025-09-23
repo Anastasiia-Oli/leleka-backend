@@ -1,6 +1,7 @@
 tags:
   - Tasks
 summary: Get user tasks
+operationId: getTasks
 description: Get all tasks of the authenticated user
 security:
   - bearerAuth: []

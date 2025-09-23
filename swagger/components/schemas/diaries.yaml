@@ -1,0 +1,31 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: '64f0c0d1f0a5b2c3d4e5f6a7'
+  title:
+    type: string
+    example: 'Перший привіт'
+  description:
+    type: string
+    example: 'Це сталось! Сьогодні ввечері, коли я спокійно дивилась фільм...'
+  date:
+    type: string
+    format: date
+    example: '2025-07-15'
+  emotions:
+    type: array
+    items:
+      type: string
+    example: ['натхнення', 'єдність']
+  userId:
+    type: string
+    example: '64f0c0d1f0a5b2c3d4e5f6a7'
+  createdAt:
+    type: string
+    format: date-time
+    example: '2025-07-15T20:00:00Z'
+  updatedAt:
+    type: string
+    format: date-time
+    example: '2025-07-15T20:05:00Z'

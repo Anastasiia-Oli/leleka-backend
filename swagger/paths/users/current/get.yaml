@@ -1,1 +1,25 @@
-# створити приватний ендпоінт на отримання інформації про поточного користувача
+tags:
+  - Users
+summary: Отримати дані поточного користувача
+operationId: getCurrentUser
+description: Повертає дані поточного автентифікованого користувача.
+security:
+  - bearerAuth: []
+
+responses:
+  '200':
+    description: Дані користувача успішно отримано.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            user:
+              type: object
+              $ref: ../../../components/schemas/user.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    description: Помилка сервера.

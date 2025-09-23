@@ -1,1 +1,44 @@
-# створити приватний ендпоінт для оновлення даних користувача
+tags:
+  - Users
+summary: Оновлення даних користувача
+operationId: updateCurrentUser
+description: Оновлює профіль поточного користувача. Можна передавати лише ті поля, які треба змінити.
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            example: Олександр
+          email:
+            type: string
+            format: email
+            example: user@example.com
+          avatarUrl:
+            type: string
+            format: uri
+            example: https://example.com/uploads/avatar.jpg
+responses:
+  '200':
+    description: Дані користувача успішно оновлено
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Дані користувача оновлено
+            user:
+              $ref: '../../components/schemas/user.yaml'
+  '400':
+    description: Некоректний запит (наприклад, неправильний email).
+  '401':
+    description: Неавторизований (немає або невірний токен).
+  '403':
+    description: Доступ заборонено (користувач не може редагувати цей профіль).
