@@ -7,6 +7,7 @@ import {
   loginUserController,
   registerUserController,
 } from '../controllers/auth.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const authRouter = Router();
 
