@@ -28,7 +28,7 @@ const diarySchema = new Schema(
     },
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'users',
       required: true,
     },
   },

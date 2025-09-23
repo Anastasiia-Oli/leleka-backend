@@ -10,7 +10,7 @@ requestBody:
   content:
     application/json:
       schema:
-        $ref: ../../components/schemas/diaries.yaml#/DiaryInput
+        $ref: ../../components/schemas/diariesInput.yaml
       example:
         title: 'Перший привіт'
         description: 'Це сталось! Сьогодні ввечері, коли я спокійно дивилась фільм...'
@@ -22,7 +22,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: ../../components/schemas/diaries.yaml#/Diary
+          $ref: ../../components/schemas/diaries.yaml
   '400':
     description: Невірні дані у запиті
   '401':
