@@ -73,6 +73,9 @@ paths:
   /api/auth/register:
     post:
       $ref: ../swagger/paths/auth/registration.yaml
+  /api/auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
 
   /api/weeks/{weekNumber}:
     get:
