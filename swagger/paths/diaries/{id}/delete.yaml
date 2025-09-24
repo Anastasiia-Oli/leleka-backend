@@ -1,0 +1,21 @@
+tags:
+  - Diaries
+summary: Видалити запис
+description: Видаляє запис за його ID.
+operationId: deleteDiary
+security:
+  - bearerAuth: []
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+    description: ID запису
+responses:
+  '204':
+    description: Запис успішно видалено
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml

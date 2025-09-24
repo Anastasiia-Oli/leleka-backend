@@ -38,7 +38,7 @@ export const setupServer = () => {
   app.use('/api-docs', swaggerDocs());
 
   // router for auth, users and so on
-  app.use(router);
+  app.use('/api', router);
 
   // handlers for errors
   app.use(notFoundHandler);

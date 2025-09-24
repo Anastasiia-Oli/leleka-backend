@@ -1,0 +1,19 @@
+type: object
+required:
+  - title
+  - description
+  - emotions
+properties:
+  title:
+    type: string
+    maxLength: 64
+  description:
+    type: string
+    maxLength: 1000
+  date:
+    type: string
+    format: date
+  emotions:
+    type: array
+    items:
+      type: string

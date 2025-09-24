@@ -1,0 +1,28 @@
+type: object
+properties:
+  weekNumber:
+    type: integer
+    example: 1
+  feelings:
+    type: object
+    properties:
+      states:
+        type: array
+        items:
+          type: string
+        example:
+          - 'Might feel mild cramping or ovulation pain.'
+      sensationDescr:
+        type: string
+        example: 'By the end of this week, ovulation is likely to occur.'
+  comfortTips:
+    type: array
+    items:
+      type: object
+      properties:
+        category:
+          type: string
+          example: 'Nutrition'
+        tip:
+          type: string
+          example: 'Eat a balanced diet rich in vitamins and minerals.'
