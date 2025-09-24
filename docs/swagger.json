@@ -883,7 +883,7 @@
         }
       }
     },
-    "/weeks/{weekNumber}": {
+    "/api/weeks/{weekNumber}": {
       "get": {
         "tags": [
           "Weeks"
@@ -962,7 +962,7 @@
         }
       }
     },
-    "/weeks/baby/{weekNumber}": {
+    "/api/weeks/baby/{weekNumber}": {
       "get": {
         "tags": [
           "Weeks"
@@ -1037,7 +1037,7 @@
         }
       }
     },
-    "/weeks/mom/{weekNumber}": {
+    "/api/weeks/mom/{weekNumber}": {
       "get": {
         "tags": [
           "Weeks"
@@ -1112,7 +1112,7 @@
         }
       }
     },
-    "/weeks/public/{weekNumber}": {
+    "/api/weeks/public/{weekNumber}": {
       "get": {
         "tags": [
           "Weeks"
