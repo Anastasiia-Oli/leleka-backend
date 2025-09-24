@@ -894,6 +894,85 @@
         "scheme": "bearer"
       }
     },
+    "responses": {
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "$ref": "#/components/responses/404"
+      }
+    },
     "schemas": {
       "401": {
         "description": "Unauthorized error",
@@ -1111,77 +1190,100 @@
           "date",
           "isDone"
         ]
-      }
-    },
-    "responses": {
-      "401": {
-        "description": "Unauthorized error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "UnauthorizedError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Access token expired"
-                    }
-                  }
-                }
-              }
-            }
+      },
+      "babyData": {
+        "type": "object",
+        "required": [
+          "weekNumber",
+          "image",
+          "babyActivity",
+          "babyDevelopment",
+          "interestingFact",
+          "momDailyTips"
+        ],
+        "properties": {
+          "weekNumber": {
+            "type": "integer",
+            "example": 1
+          },
+          "analogy": {
+            "type": "string",
+            "example": null
+          },
+          "babySize": {
+            "type": "number",
+            "example": 0
+          },
+          "babyWeight": {
+            "type": "number",
+            "example": 0
+          },
+          "image": {
+            "type": "string",
+            "example": "https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af25.webp"
+          },
+          "babyActivity": {
+            "type": "string",
+            "example": "At this stage of pregnancy, there is no fetal activity yet."
+          },
+          "babyDevelopment": {
+            "type": "string",
+            "example": "Technically, fertilization has not yet occurred."
+          },
+          "interestingFact": {
+            "type": "string",
+            "example": "Around 60% of women do not realize pregnancy is counted from 2 weeks before fertilization."
+          },
+          "momDailyTips": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "example": [
+              "Start taking folic acid (400 mcg daily).",
+              "Eat fruits and vegetables daily."
+            ]
           }
         }
       },
-      "404": {
-        "description": "Not Found error",
-        "content": {
-          "application/json": {
-            "schema": {
+      "momData": {
+        "type": "object",
+        "properties": {
+          "weekNumber": {
+            "type": "integer",
+            "example": 1
+          },
+          "feelings": {
+            "type": "object",
+            "properties": {
+              "states": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "Might feel mild cramping or ovulation pain."
+                ]
+              },
+              "sensationDescr": {
+                "type": "string",
+                "example": "By the end of this week, ovulation is likely to occur."
+              }
+            }
+          },
+          "comfortTips": {
+            "type": "array",
+            "items": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
               "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
+                "category": {
                   "type": "string",
-                  "example": "NotFoundError"
+                  "example": "Nutrition"
                 },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Not Found"
-                    }
-                  }
+                "tip": {
+                  "type": "string",
+                  "example": "Eat a balanced diet rich in vitamins and minerals."
                 }
               }
             }

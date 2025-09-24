@@ -75,8 +75,27 @@ paths:
     post:
       $ref: ../swagger/paths/auth/registration.yaml
 
+  /weeks/{weekNumber}:
+    get:
+      $ref: ../swagger/paths/weeks/get.yaml
+
+  /weeks/baby/{weekNumber}:
+    get:
+      $ref: ../swagger/paths/weeks/baby.yaml
+
+  /weeks/mom/{weekNumber}:
+    get:
+      $ref: ../swagger/paths/weeks/mom.yaml
+
+  /weeks/public/{weekNumber}:
+    get:
+      $ref: ../swagger/paths/weeks/public.yaml
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+
+  responses:
+    NotFound:
+      $ref: '../swagger/components/responses/404.yaml'
