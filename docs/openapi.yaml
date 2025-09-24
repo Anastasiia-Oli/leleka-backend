@@ -18,7 +18,6 @@ tags:
   - name: Weeks
     description: Weeks operations.
 servers:
-  - url: http://localhost:3000
   - url: https://leleka-backend-1.onrender.com
 paths:
   # USERS
@@ -95,7 +94,3 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-
-  responses:
-    NotFound:
-      $ref: '../swagger/components/responses/404.yaml'

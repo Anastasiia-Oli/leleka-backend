@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
       "url": "https://leleka-backend-1.onrender.com"
     }
   ],
@@ -885,6 +882,307 @@
           }
         }
       }
+    },
+    "/weeks/{weekNumber}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get weeks",
+        "operationId": "getWeek",
+        "description": "Get all weeks",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "weekNumber",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get week by number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "weekNumber",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "weekNumber": {
+                      "type": "number",
+                      "example": 20
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "baby",
+                        "mom"
+                      ],
+                      "properties": {
+                        "baby": {
+                          "$ref": "#/components/schemas/babyData"
+                        },
+                        "mom": {
+                          "$ref": "#/components/schemas/momData"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/weeks/baby/{weekNumber}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get baby data for a specific week",
+        "operationId": "getBabyWeek",
+        "description": "Returns data about the baby for a given week number",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "weekNumber",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Baby data for the requested week",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "weekNumber",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "weekNumber": {
+                      "type": "integer",
+                      "example": 20
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "baby"
+                      ],
+                      "properties": {
+                        "baby": {
+                          "$ref": "#/components/schemas/babyData"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/weeks/mom/{weekNumber}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get mom data for a specific week",
+        "operationId": "getMomWeek",
+        "description": "Get mom data for a specific week",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "weekNumber",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get mom data by week number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "weekNumber",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "weekNumber": {
+                      "type": "number",
+                      "example": 20
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "mom"
+                      ],
+                      "properties": {
+                        "mom": {
+                          "$ref": "#/components/schemas/momData"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/weeks/public/{weekNumber}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get public week data",
+        "operationId": "getPublicWeek",
+        "description": "Get week data available publicly without authentication",
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "weekNumber",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get week data by number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "weekNumber",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "weekNumber": {
+                      "type": "number",
+                      "example": 20
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "baby",
+                        "mom"
+                      ],
+                      "properties": {
+                        "baby": {
+                          "$ref": "#/components/schemas/babyData"
+                        },
+                        "mom": {
+                          "$ref": "#/components/schemas/momData"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -892,85 +1190,6 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
-      }
-    },
-    "responses": {
-      "401": {
-        "description": "Unauthorized error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "UnauthorizedError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Access token expired"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "404": {
-        "description": "Not Found error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
-                  "type": "string",
-                  "example": "NotFoundError"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Not Found"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "NotFound": {
-        "$ref": "#/components/responses/404"
       }
     },
     "schemas": {
@@ -1284,6 +1503,82 @@
                 "tip": {
                   "type": "string",
                   "example": "Eat a balanced diet rich in vitamins and minerals."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Found"
+                    }
+                  }
                 }
               }
             }

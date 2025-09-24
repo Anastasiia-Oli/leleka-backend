@@ -3,6 +3,7 @@ tags:
 summary: Get public week data
 operationId: getPublicWeek
 description: Get week data available publicly without authentication
+security: []
 parameters:
   - in: path
     name: weekNumber
