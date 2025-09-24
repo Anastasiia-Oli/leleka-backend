@@ -21,50 +21,59 @@ servers:
   - url: http://localhost:3000
   - url: https://leleka-backend-1.onrender.com
 paths:
+  # USERS
+  # -------------------------------
   # створити приватний ендпоінт на отримання інформації про поточного користувача
-  /users/current:
+  /api/users/current:
     get:
       $ref: ../swagger/paths/users/current/get.yaml
 
       # створити приватний ендпоінт для оновлення даних користувача
-  /users:
+  /api/users:
     patch:
       $ref: ../swagger/paths/users/patch.yaml
 
       # створити приватний ендпоінт для оновлення аватару корситувача
-  /users/avatar:
+  /api/users/avatar:
     patch:
       $ref: ../swagger/paths/users/avatar/patch.yaml
 
   # DIARIES
   # -------------------------------
-  /diaries:
+  /api/diaries:
     get: # 🔹 Отримати всі записи
       $ref: ../swagger/paths/diaries/get.yaml
     post: # 🔹 Створити новий запис
       $ref: ../swagger/paths/diaries/post.yaml
 
-  /diaries/{id}:
+  /api/diaries/{id}:
     patch: # 🔹 Редагувати запис
       $ref: ../swagger/paths/diaries/{id}/patch.yaml
     delete: # 🔹 Видалити запис
       $ref: ../swagger/paths/diaries/{id}/delete.yaml
 
-  /tasks:
+  # TASKS
+  # -------------------------------
+  /api/tasks:
     post:
       $ref: '../swagger/paths/tasks/post.yaml'
     get:
       $ref: '../swagger/paths/tasks/get.yaml'
-  /tasks/{id}:
+  /api/tasks/{id}/status:
     patch:
-      $ref: '../swagger/paths/tasks/{id}/patch.yaml'
+      $ref: '../swagger/paths/tasks/{id}/status/patch.yaml'
 
-  /auth:
+  # AUTH
+  # -------------------------------
+  /api/auth/logout:
     post:
       $ref: ../swagger/paths/auth/post.yaml
-  /auth/login:
+  /api/auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml
+  /api/auth/register:
+    post:
+      $ref: ../swagger/paths/auth/registration.yaml
 
   /weeks/{weekNumber}:
     get:
