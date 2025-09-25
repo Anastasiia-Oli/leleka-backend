@@ -7,8 +7,10 @@ import {
   getTaskController,
   updateTaskStatusController,
 } from '../controllers/tasks.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const tasksRouter = Router();
+tasksRouter.use(authenticate);
 
 tasksRouter.post(
   '/',
@@ -17,7 +19,7 @@ tasksRouter.post(
 );
 tasksRouter.get('/', ctrlWrapper(getTaskController));
 tasksRouter.patch(
-  '/:id',
+  '/:id/status',
   validateBody(updateStatusSchema),
   ctrlWrapper(updateTaskStatusController),
 );
