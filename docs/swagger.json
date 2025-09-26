@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
       "url": "https://leleka-backend-1.onrender.com"
     }
   ],
@@ -40,7 +37,7 @@
     }
   ],
   "paths": {
-    "/users/current": {
+    "/api/users/current": {
       "get": {
         "tags": [
           "Users"
@@ -82,7 +79,7 @@
         }
       }
     },
-    "/users": {
+    "/api/users": {
       "patch": {
         "tags": [
           "Users"
@@ -153,7 +150,7 @@
         }
       }
     },
-    "/users/avatar": {
+    "/api/users/avatar": {
       "patch": {
         "tags": [
           "Users"
@@ -212,7 +209,7 @@
         }
       }
     },
-    "/diaries": {
+    "/api/diaries": {
       "get": {
         "tags": [
           "Diaries"
@@ -310,7 +307,7 @@
         }
       }
     },
-    "/diaries/{id}": {
+    "/api/diaries/{id}": {
       "patch": {
         "tags": [
           "Diaries"
@@ -411,7 +408,7 @@
         }
       }
     },
-    "/tasks": {
+    "/api/tasks": {
       "post": {
         "tags": [
           "Tasks"
@@ -564,7 +561,7 @@
         }
       }
     },
-    "/tasks/{id}": {
+    "/api/tasks/{id}/status": {
       "patch": {
         "tags": [
           "Tasks"
@@ -673,7 +670,7 @@
         }
       }
     },
-    "/auth": {
+    "/api/auth/logout": {
       "post": {
         "tags": [
           "Auth"
@@ -717,7 +714,7 @@
         }
       }
     },
-    "/auth/login": {
+    "/api/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -784,6 +781,495 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registration new user",
+        "operationId": "registrationUser",
+        "description": "Registration new user",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "example": "Анастасія"
+                  },
+                  "email": {
+                    "type": "string",
+                    "maxLength": 64,
+                    "example": "test@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 128,
+                    "example": "superpassword123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "A user with this email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh user session",
+        "operationId": "refreshUserSession",
+        "description": "Refreshes the user session using refreshToken and sessionId from cookies. Returns a new accessToken and updates cookies.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "No body required. The refreshToken and sessionId must be sent via HttpOnly cookies.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session successfully refreshed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "Newly generated access token",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — session not found or refreshToken expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Session not found or token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/weeks/{weekNumber}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get weeks",
+        "operationId": "getWeek",
+        "description": "Get all weeks",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "weekNumber",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get week by number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "weekNumber",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "weekNumber": {
+                      "type": "number",
+                      "example": 20
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "baby",
+                        "mom"
+                      ],
+                      "properties": {
+                        "baby": {
+                          "$ref": "#/components/schemas/babyData"
+                        },
+                        "mom": {
+                          "$ref": "#/components/schemas/momData"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/weeks/baby/{weekNumber}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get baby data for a specific week",
+        "operationId": "getBabyWeek",
+        "description": "Returns data about the baby for a given week number",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "weekNumber",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Baby data for the requested week",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "weekNumber",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "weekNumber": {
+                      "type": "integer",
+                      "example": 20
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "baby"
+                      ],
+                      "properties": {
+                        "baby": {
+                          "$ref": "#/components/schemas/babyData"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/weeks/mom/{weekNumber}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get mom data for a specific week",
+        "operationId": "getMomWeek",
+        "description": "Get mom data for a specific week",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "weekNumber",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get mom data by week number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "weekNumber",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "weekNumber": {
+                      "type": "number",
+                      "example": 20
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "mom"
+                      ],
+                      "properties": {
+                        "mom": {
+                          "$ref": "#/components/schemas/momData"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/weeks/public/{weekNumber}": {
+      "get": {
+        "tags": [
+          "Weeks"
+        ],
+        "summary": "Get public week data",
+        "operationId": "getPublicWeek",
+        "description": "Get week data available publicly without authentication",
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "weekNumber",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get week data by number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "weekNumber",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "weekNumber": {
+                      "type": "number",
+                      "example": 20
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "baby",
+                        "mom"
+                      ],
+                      "properties": {
+                        "baby": {
+                          "$ref": "#/components/schemas/babyData"
+                        },
+                        "mom": {
+                          "$ref": "#/components/schemas/momData"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -1013,6 +1499,105 @@
           "date",
           "isDone"
         ]
+      },
+      "babyData": {
+        "type": "object",
+        "required": [
+          "weekNumber",
+          "image",
+          "babyActivity",
+          "babyDevelopment",
+          "interestingFact",
+          "momDailyTips"
+        ],
+        "properties": {
+          "weekNumber": {
+            "type": "integer",
+            "example": 1
+          },
+          "analogy": {
+            "type": "string",
+            "example": null
+          },
+          "babySize": {
+            "type": "number",
+            "example": 0
+          },
+          "babyWeight": {
+            "type": "number",
+            "example": 0
+          },
+          "image": {
+            "type": "string",
+            "example": "https://ftp.goit.study/img/lehlehka/6895ce04a5c677999ed2af25.webp"
+          },
+          "babyActivity": {
+            "type": "string",
+            "example": "At this stage of pregnancy, there is no fetal activity yet."
+          },
+          "babyDevelopment": {
+            "type": "string",
+            "example": "Technically, fertilization has not yet occurred."
+          },
+          "interestingFact": {
+            "type": "string",
+            "example": "Around 60% of women do not realize pregnancy is counted from 2 weeks before fertilization."
+          },
+          "momDailyTips": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "example": [
+              "Start taking folic acid (400 mcg daily).",
+              "Eat fruits and vegetables daily."
+            ]
+          }
+        }
+      },
+      "momData": {
+        "type": "object",
+        "properties": {
+          "weekNumber": {
+            "type": "integer",
+            "example": 1
+          },
+          "feelings": {
+            "type": "object",
+            "properties": {
+              "states": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "Might feel mild cramping or ovulation pain."
+                ]
+              },
+              "sensationDescr": {
+                "type": "string",
+                "example": "By the end of this week, ovulation is likely to occur."
+              }
+            }
+          },
+          "comfortTips": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "example": "Nutrition"
+                },
+                "tip": {
+                  "type": "string",
+                  "example": "Eat a balanced diet rich in vitamins and minerals."
+                }
+              }
+            }
+          }
+        }
       }
     },
     "responses": {

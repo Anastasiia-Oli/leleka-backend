@@ -2,33 +2,15 @@ import { model, Schema } from 'mongoose';
 
 const momStatesSchema = new Schema(
   {
-    weekNumber: {
-      type: Number,
-      default: 1,
-      required: true,
-    },
+    weekNumber: { type: Number, default: 1, required: true },
     feelings: {
-      states: {
-        type: [String],
-        default: [],
-      },
-
-      sensationDescr: {
-        type: String,
-        required: true,
-      },
+      states: { type: [String], default: [] },
+      sensationDescr: { type: String, required: true },
     },
-
     comfortTips: [
       {
-        category: {
-          type: String,
-          required: true,
-        },
-        tip: {
-          type: String,
-          required: true,
-        },
+        category: { type: String, required: true },
+        tip: { type: String, required: true },
       },
     ],
   },
@@ -38,4 +20,4 @@ const momStatesSchema = new Schema(
   },
 );
 
-export const MomStates = model('momState', momStatesSchema);
+export const MomStates = model('MomStates', momStatesSchema, 'momStates');

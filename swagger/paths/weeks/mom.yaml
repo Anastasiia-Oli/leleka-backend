@@ -1,8 +1,8 @@
 tags:
   - Weeks
-summary: Get weeks
-operationId: getWeek
-description: Get all weeks
+summary: Get mom data for a specific week
+operationId: getMomWeek
+description: Get mom data for a specific week
 security:
   - bearerAuth: []
 parameters:
@@ -14,7 +14,7 @@ parameters:
       example: 20
 responses:
   '200':
-    description: 'Get week by number'
+    description: 'Get mom data by week number'
     content:
       application/json:
         schema:
@@ -37,11 +37,8 @@ responses:
             data:
               type: object
               required:
-                - baby
                 - mom
               properties:
-                baby:
-                  $ref: ../../components/schemas/weeks/babyData.yaml
                 mom:
                   $ref: ../../components/schemas/weeks/momData.yaml
   '401':
