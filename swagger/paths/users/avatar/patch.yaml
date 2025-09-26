@@ -12,7 +12,7 @@ requestBody:
       schema:
         type: object
         properties:
-          avatar:
+          photo:
             type: string
             format: binary
             description: Файл зображення для аватара.
