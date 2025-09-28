@@ -10,13 +10,18 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
+const FRONTEND_ORIGIN = 'http://localhost:3001';
 
 export const setupServer = () => {
   const app = express();
 
   // middlewares for app
   app.use(express.json());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: FRONTEND_ORIGIN,
+      credentials: true,
+    }));
   app.use(cookieParser());
 
   app.use(
