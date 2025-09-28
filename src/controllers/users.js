@@ -1,4 +1,5 @@
 import { getUserById, updateUser, updateAvatar } from '../services/users.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export async function getCurrentUser(req, res) {
   try {
@@ -33,13 +34,18 @@ export async function updateUserData(req, res) {
 
 export async function updateUserAvatar(req, res) {
   try {
-    console.log('Decoded JWT payload:', req.user);
-    console.log('updateCurrentUserController -> req.body:', req.body);
-    if (!req.file) {
+    // console.log('Decoded JWT payload:', req.user);
+    // console.log('updateCurrentUserController -> req.body:', req.body);
+    const photo = req.file;
+    let photoUrl;
+
+    if (!photo) {
       return res.status(400).json({ message: 'Файл не завантажено' });
+    } else {
+      photoUrl = await saveFileToCloudinary(photo);
     }
 
-    const updatedUser = await updateAvatar(req.user._id, req.file.path);
+    const updatedUser = await updateAvatar(req.user._id, photoUrl);
 
     // if (!updatedUser) {
     //   return res.status(404).json({ message: 'Користувача не знайдено' });
