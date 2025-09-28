@@ -13,7 +13,7 @@ export const registerUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
   if (user) throw createHttpError(409, 'Email in use');
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
-  await UsersCollection.create({
+  return await UsersCollection.create({
     ...payload,
     password: encryptedPassword,
   });
