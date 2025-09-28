@@ -13,7 +13,7 @@ export const getWeekData = async (weekNumber, dueDate) => {
     const today = new Date();
     daysLeft = Math.max(0, Math.ceil((due - today) / (1000 * 60 * 60 * 24)));
   } else {
-    const totalWeeks = 40;
+    const totalWeeks = 42;
     daysLeft = (totalWeeks - weekNumber) * 7;
   }
 
