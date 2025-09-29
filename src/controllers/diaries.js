@@ -46,7 +46,8 @@ export const updateDiary = async (req, res, next) => {
 // Видалити запис
 export const deleteDiary = async (req, res, next) => {
   try {
-    const diary = await deleteDiaryService(req.params.id, req.user._id);
+    const { diaryId } = req.params;
+    const diary = await deleteDiaryService(diaryId, req.user._id);
     if (!diary) {
       return res.status(404).json({ message: 'Запис не знайдено' });
     }
