@@ -4,8 +4,9 @@ import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 export async function getCurrentUser(req, res) {
   try {
     const user = await getUserById(req.user._id);
-    if (!user)
+    if (!user) {
       return res.status(404).json({ message: 'Користувача не знайдено' });
+    }
     res.json({ user });
   } catch (error) {
     res.status(500).json({ message: 'Помилка сервера' });
