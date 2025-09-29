@@ -15,9 +15,9 @@ export async function getCurrentUser(req, res) {
 
 export async function updateUserData(req, res) {
   try {
-    console.log('Контролер отримав запит');
-    console.log('Decoded JWT payload:', req.user);
-    console.log('updateCurrentUserController -> req.body:', req.body);
+    // console.log('Контролер отримав запит');
+    // console.log('Decoded JWT payload:', req.user);
+    // console.log('updateCurrentUserController -> req.body:', req.body);
 
     const updatedUser = await updateUser(req.user._id, req.body);
 
