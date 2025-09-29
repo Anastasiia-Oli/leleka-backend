@@ -3,7 +3,7 @@ import createHttpError from 'http-errors';
 import { randomBytes } from 'crypto';
 import { UsersCollection } from '../db/models/users.js';
 import { SessionsCollection } from '../db/models/session.js';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+import { ONE_DAY } from '../constants/index.js';
 
 export const logoutUser = async (sessionId) => {
   await SessionsCollection.deleteOne({ _id: sessionId });
@@ -25,7 +25,7 @@ export const registerUser = async (payload) => {
     userId: user._id,
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + ONE_DAY),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
 
@@ -63,7 +63,7 @@ export const loginUser = async (payload) => {
     userId: user._id,
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + ONE_DAY),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
 
@@ -89,7 +89,7 @@ const createSession = () => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + ONE_DAY),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   };
 };
