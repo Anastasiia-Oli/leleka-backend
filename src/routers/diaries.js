@@ -19,8 +19,8 @@ router.post('/', validateBody(diarySchema), createDiary);
 // GET /diaries
 router.get('/', getDiaries);
 
-// PUT /diaries/:id
-router.put('/:id', validateBody(diarySchema), updateDiary);
+// PATCH /diaries/:id
+router.patch('/:id', validateBody(diarySchema), updateDiary);
 
 // DELETE /diaries/:id
 router.delete('/:id', deleteDiary);
