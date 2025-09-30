@@ -15,12 +15,14 @@ export const createDiaryService = async ({
     emotions,
     userId,
   });
-  return newDiary;
+  return newDiary.populate('emotions', '_id title');
 };
 
 // Отримати всі записи користувача
 export const getDiariesService = async (userId) => {
-  const diaries = await Diary.find({ userId }).sort({ createdAt: -1 });
+  const diaries = await Diary.find({ userId })
+    .sort({ createdAt: -1 })
+    .populate('emotions', '_id title');
   return diaries;
 };
 
@@ -28,7 +30,7 @@ export const getDiariesService = async (userId) => {
 export const updateDiaryService = async (id, userId, updateData) => {
   const diary = await Diary.findOneAndUpdate({ _id: id, userId }, updateData, {
     new: true,
-  });
+  }).populate('emotions', '_id title');
   return diary;
 };
 
