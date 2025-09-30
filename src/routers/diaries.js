@@ -5,7 +5,7 @@ import {
   updateDiary,
   deleteDiary,
 } from '../controllers/diaries.js';
-import { diarySchema } from '../validation/diaries.js';
+import { diarySchema, editDiarySchema } from '../validation/diaries.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
@@ -20,7 +20,7 @@ router.post('/', validateBody(diarySchema), createDiary);
 router.get('/', getDiaries);
 
 // PATCH /diaries/:id
-router.patch('/:id', validateBody(diarySchema), updateDiary);
+router.patch('/:id', validateBody(editDiarySchema), updateDiary);
 
 // DELETE /diaries/:id
 router.delete('/:id', deleteDiary);
