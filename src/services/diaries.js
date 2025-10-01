@@ -14,7 +14,8 @@ export const createDiaryService = async ({
     date,
     emotions,
     userId,
-  }).populate('emotions', '_id title');
+  });
+  // .populate('emotions', '_id title')
   return newDiary;
 };
 
