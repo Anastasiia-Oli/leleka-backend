@@ -18,17 +18,15 @@ const diarySchema = new Schema(
       type: String, // формат "YYYY-MM-DD"
       default: () => new Date().toISOString().split('T')[0],
     },
-    emotions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'emotions',
-        required: true,
-        validate: {
-          validator: (arr) => arr.length >= 1 && arr.length <= 12,
-          message: 'Має бути від 1 до 12 емоцій',
-        },
+    emotions: {
+      type: [Schema.Types.ObjectId],
+      ref: 'emotions',
+      required: true,
+      validate: {
+        validator: (arr) => arr.length >= 1 && arr.length <= 12,
+        message: 'Має бути від 1 до 12 емоцій',
       },
-    ],
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'users',
