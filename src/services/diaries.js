@@ -14,8 +14,8 @@ export const createDiaryService = async ({
     date,
     emotions,
     userId,
-  });
-  return newDiary.populate('emotions', '_id title');
+  }).populate('emotions', '_id title');
+  return newDiary;
 };
 
 // Отримати всі записи користувача
