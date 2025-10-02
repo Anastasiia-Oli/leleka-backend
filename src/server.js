@@ -18,7 +18,12 @@ export const setupServer = () => {
   app.use(express.json());
   app.use(
     cors({
-      origin: true,
+      origin: [
+        'https://leleka-frontend.vercel.app',
+        'https://leleka-frontend-8fd4akssn-anastasiias-projects-fde58615.vercel.app',
+        'https://leleka-frontend-k0gnlys61-anastasiias-projects-fde58615.vercel.app',
+        'https://leleka-frontend-git-main-anastasiias-projects-fde58615.vercel.app',
+      ],
       credentials: true, // обязательно, если используешь куки или токены
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
