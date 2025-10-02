@@ -28,7 +28,7 @@ export const setupServer = () => {
       allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   );
-  app.options('*', cors());
+  app.options(/.*/, cors());
 
   app.use(cookieParser());
 
