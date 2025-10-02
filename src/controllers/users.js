@@ -7,7 +7,7 @@ export async function getCurrentUser(req, res) {
     if (!user) {
       return res.status(404).json({ message: 'Користувача не знайдено' });
     }
-    res.json({ user });
+    res.json(user);
   } catch (error) {
     res.status(500).json({ message: 'Помилка сервера' });
     console.error(error);
