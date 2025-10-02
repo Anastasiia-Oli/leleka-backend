@@ -16,7 +16,20 @@ export const setupServer = () => {
 
   // middlewares for app
   app.use(express.json());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: [
+        'https://leleka-frontend.vercel.app',
+        'https://leleka-frontend-8fd4akssn-anastasiias-projects-fde58615.vercel.app',
+        'https://leleka-frontend-git-main-anastasiias-projects-fde58615.vercel.app',
+      ],
+      credentials: true, // обязательно, если используешь куки или токены
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    }),
+  );
+  app.options('*', cors());
+
   app.use(cookieParser());
 
   app.use(
